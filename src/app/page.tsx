@@ -24,11 +24,11 @@ const MAX_QR_SIZE = 3000;
 const PREVIEW_SCALE_FACTOR = 0.2;
 const MAX_PREVIEW_SIZE = 400;
 const DEFAULT_QR_SETTINGS = {
-  size: 512,
+  size: 800,
   bgColor: "#ffffff",
   fgColor: "#000000",
-  level: "L" as ErrorCorrectionLevel,
-  includeMargin: true,
+  level: "Q" as ErrorCorrectionLevel,
+  includeMargin: false,
 };
 
 export default function QRGenerator() {
@@ -118,7 +118,7 @@ export default function QRGenerator() {
       setError("Error al generar el SVG");
       throw err;
     }
-  }, [size, bgColor, fgColor, includeMargin]); // Removed unnecessary dependencies
+  }, [size, bgColor, fgColor, includeMargin]);
 
   // Manejar descarga
   const handleDownload = useCallback(async () => {
@@ -751,10 +751,10 @@ export default function QRGenerator() {
                     />
                   </div>
                 ) : (
-                  <div className="text-center p-6 text-gray-400">
+                  <div className="text-center p-2 text-gray-400">
                     <RiQrCodeLine
                       size={48}
-                      className="mx-auto mb-4 opacity-50"
+                      className="mx-auto mb-3 opacity-50"
                     />
                     <p className="font-medium text-lg">Vista previa del QR</p>
                     <p className="text-sm mt-2 text-gray-500 max-w-xs">
