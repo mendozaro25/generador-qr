@@ -52,7 +52,6 @@ export default function QRGenerator() {
   // Refs
   const qrContainerRef = useRef<HTMLDivElement>(null);
   const qrPreviewRef = useRef<HTMLDivElement>(null);
-  const qrCanvasRef = useRef<HTMLCanvasElement>(null);
   const downloadTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Validación de color hexadecimal
@@ -104,7 +103,6 @@ export default function QRGenerator() {
       const svgSize = Math.min(size, MAX_QR_SIZE);
       const qrSize = svgSize - (includeMargin ? 40 : 0);
 
-      // Nota: En producción, reemplazar esto con una librería real de generación de QR
       const svgContent = `
         <svg xmlns="http://www.w3.org/2000/svg" width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}">
           <rect width="100%" height="100%" fill="${bgColor}"/>
@@ -120,7 +118,7 @@ export default function QRGenerator() {
       setError("Error al generar el SVG");
       throw err;
     }
-  }, [text, size, bgColor, fgColor, level, includeMargin]);
+  }, [size, bgColor, fgColor, includeMargin]); // Removed unnecessary dependencies
 
   // Manejar descarga
   const handleDownload = useCallback(async () => {
@@ -176,9 +174,7 @@ export default function QRGenerator() {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       try {
-        const html2canvas = (await import("html2canvas")).default;
         const qrCanvas = qrWrapper.querySelector("canvas");
-
         if (!qrCanvas) {
           throw new Error("No se pudo generar el código QR");
         }
@@ -238,7 +234,7 @@ export default function QRGenerator() {
 
   // Copiar al portapapeles
   const copyToClipboard = useCallback(async () => {
-    if (!text.trim() || isCopied) return;
+    if (!text.trim() || isCopied || isGenerating) return;
 
     try {
       await navigator.clipboard.writeText(text);
@@ -255,7 +251,7 @@ export default function QRGenerator() {
       console.error("Error al copiar: ", err);
       setError("No se pudo copiar al portapapeles");
     }
-  }, [text, isCopied]);
+  }, [text, isCopied, isGenerating]);
 
   // Restablecer colores
   const resetColors = useCallback(() => {
