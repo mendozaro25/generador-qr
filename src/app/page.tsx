@@ -347,9 +347,7 @@ export default function QRGenerator() {
                 className="text-amber-200 animate-pulse"
               />
               <div>
-                <h1 className="text-3xl font-bold tracking-tight">
-                  QRs JLuu
-                </h1>
+                <h1 className="text-3xl font-bold tracking-tight">QRs JLuu</h1>
                 <p className="text-amber-100 mt-1 text-sm font-medium">
                   Generador profesional de códigos QR de alta resolución
                 </p>
@@ -357,7 +355,10 @@ export default function QRGenerator() {
             </div>
             <button
               onClick={() =>
-                window.open("https://github.com/zpao/qrcode.react", "_blank")
+                window.open(
+                  "https://github.com/mendozaro25/generador-qr",
+                  "_blank"
+                )
               }
               className="p-2 rounded-full hover:bg-amber-700/30 transition-all transform hover:scale-110"
               aria-label="Código fuente en GitHub"
@@ -841,8 +842,8 @@ export default function QRGenerator() {
         {/* Footer */}
         <div className="px-8 py-5 bg-gray-50 border-t border-gray-100 text-center">
           <p className="text-xs text-gray-500">
-            <span className="font-semibold">Generador QR</span> • JLuu
-            • {new Date().getFullYear()}
+            <span className="font-semibold">Generador QR</span> • JLuu •{" "}
+            {new Date().getFullYear()}
           </p>
         </div>
       </div>
